@@ -1,9 +1,14 @@
-REBAR ?= rebar
+REBAR ?= ./rebar3
 
 top:
-	$(REBAR) get-deps compile
+	$(REBAR) compile
 	../escriptize example
 
 clean:
 	$(REBAR) clean
+	-rm rebar.lock
+	-rm -rf _build
 	-rm example
+	-rm -rf .example
+	-rm compile_commands.json
+

@@ -19,7 +19,7 @@ main([OutputPath] = _Args) ->
 
     % Then we need to add the deps, excluding ourselves, in case we're in the
     % deps directory.
-    Deps = filelib:wildcard("*", "deps") -- ["escriptize"],
+    Deps = filelib:wildcard("*", "_build/default/lib") -- ["escriptize"],
     InputPaths1 = lists:flatmap(
                    fun(Dep) ->
                            get_dep_entries(Dep)
@@ -46,7 +46,7 @@ main([OutputPath] = _Args) ->
 % Transform them to zip entries, e.g.:
 %   {"mochijson2/ebin/mochijson.beam", "deps/mochijson2/ebin/mochijson2.beam"}
 get_dep_entries(Dep) ->
-    DepDir = filename:join("deps", Dep),
+    DepDir = filename:join("_build/default/lib", Dep),
     [{filename:join(Dep, F), filename:join(DepDir, F)}
      || F <- filelib:wildcard("ebin/*.beam", DepDir) ++ filelib:wildcard("priv/*", DepDir)].
 
